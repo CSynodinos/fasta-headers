@@ -1,0 +1,13 @@
+# files and directories.
+*.pyc
+.venv/
+.vscode/
+.__pycache__/
+*.fasta
+*.zip
+.DS_Store
+
+# package files.
+build/
+dist/
+*egg-info/
