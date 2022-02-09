@@ -15,7 +15,7 @@ class headers:
         self. new_desc = new_desc
 
     @staticmethod
-    def _logic(record: str, switch_id: str, switch_description: str, outputfl: str, counter = None) -> None:
+    def _record_parser(record: str, switch_id: str, switch_description: str, outputfl: str, counter = None) -> None:
         """Header renaming method.
 
         Args:
@@ -50,7 +50,7 @@ class headers:
             ""f"from {original_description} to {record.description}.")
 
     @classmethod
-    def _run_logic(cls, c: bool, rec: any, iter: int, nid: str, ndesc: str, out: str) -> None:
+    def _run_parser(cls, c: bool, rec: any, iter: int, nid: str, ndesc: str, out: str) -> None:
         """Run _logic static method by checking boolean condition.
 
         Args:
@@ -63,11 +63,11 @@ class headers:
         """
 
         if c:
-            cls._logic(record = rec, counter = iter, switch_id = nid, 
+            cls._record_parser(record = rec, counter = iter, switch_id = nid, 
                     switch_description = ndesc, outputfl = out)
 
         else:   # no count.
-            cls._logic(record = rec, switch_id = nid, 
+            cls._record_parser(record = rec, switch_id = nid, 
                     switch_description = ndesc, outputfl = out)
 
     def rename(self, count: bool) -> str:
@@ -105,7 +105,7 @@ class headers:
 
                     if iter > 1: # only when the first pattern in the list is iterated.
                         if re.search(i, record.id):
-                            self._run_logic(c = count, rec = record, iter = iter, nid = self.new_id,
+                            self._run_parser(c = count, rec = record, iter = iter, nid = self.new_id,
                                             ndesc = self.new_desc, out = outfl)
                             iter += 1
                         else:
@@ -113,7 +113,7 @@ class headers:
 
                     else:   # Run first pattern seperately.
                         if re.search(i, record.id):
-                            self._run_logic(c = count, rec = record, iter = iter, nid = self.new_id,
+                            self._run_parser(c = count, rec = record, iter = iter, nid = self.new_id,
                                             ndesc = self.new_desc, out = outfl)
                             iter += 1
                         else:
@@ -136,7 +136,7 @@ def main():
     inp_fl = ""
     out_fl = ""
     patterns = [""]
-    headers(inp = inp_fl, out = out_fl, pattern = patterns, new_id = "foo", new_desc = "bar").rename()
+    headers(inp = inp_fl, out = out_fl, pattern = patterns, new_id = "foo", new_desc = "bar").rename(count = True)
 
 if __name__ == "__main__":
     main()
