@@ -44,15 +44,15 @@ class _info_parser:
 
         return patterns_dict, new_ids_dict, new_desc_dict
 
-    def _pattern_parser(self):
+    def _pattern_parser(self) -> list:
         """Returns a list containing the specified patterns."""
         return list(self._main_parser(fl = self.csvfl)[0].values())
 
-    def _new_ids_parser(self):
+    def _new_ids_parser(self) -> list:
         """Returns a list containing the specified new ids."""
         return list(self._main_parser(fl = self.csvfl)[1].values())
 
-    def _new_desc_parser(self):
+    def _new_desc_parser(self) -> list:
         """Returns a list containing the specified new descriptions."""
         return list(self._main_parser(fl = self.csvfl)[2].values())
 
