@@ -13,7 +13,7 @@ class _info_parser:
         self.csvfl = csvfl
 
     @staticmethod
-    def _main_parser(fl):
+    def _main_parser(fl: str) -> list:
         """Parse through .csv file containing the patterns and their corresponding id and description changes.
 
         Args:
