@@ -192,7 +192,8 @@ class headers(_info_parser):
 def main():
     inp_fl = ""
     out_fl = ""
-    headers(inp = inp_fl, out = out_fl, info = True, change_id = True, change_desc = True, csvfl = "patterns.csv").rename(count = True)
+    patterns = ""
+    headers(inp = inp_fl, out = out_fl, info = True, change_id = True, change_desc = True, csvfl = patterns).rename(count = True)
 
 if __name__ == "__main__":
     main()
