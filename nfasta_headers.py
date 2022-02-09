@@ -50,7 +50,7 @@ class headers:
             ""f"from {original_description} to {record.description}.")
 
     @classmethod
-    def _run_parser(cls, c: bool, rec: any, iter: int, nid: str, ndesc: str, out: str) -> None:
+    def _exec_parser(cls, c: bool, rec: any, iter: int, nid: str, ndesc: str, out: str) -> None:
         """Run _logic static method by checking boolean condition.
 
         Args:
@@ -105,7 +105,7 @@ class headers:
 
                     if iter > 1: # only when the first pattern in the list is iterated.
                         if re.search(i, record.id):
-                            self._run_parser(c = count, rec = record, iter = iter, nid = self.new_id,
+                            self._exec_parser(c = count, rec = record, iter = iter, nid = self.new_id,
                                             ndesc = self.new_desc, out = outfl)
                             iter += 1
                         else:
@@ -113,7 +113,7 @@ class headers:
 
                     else:   # Run first pattern seperately.
                         if re.search(i, record.id):
-                            self._run_parser(c = count, rec = record, iter = iter, nid = self.new_id,
+                            self._exec_parser(c = count, rec = record, iter = iter, nid = self.new_id,
                                             ndesc = self.new_desc, out = outfl)
                             iter += 1
                         else:
