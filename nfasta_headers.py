@@ -3,6 +3,7 @@ from __future__ import annotations
 
 from Bio import SeqIO
 import re
+from collections import defaultdict
 
 
 class headers:
