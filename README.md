@@ -1,0 +1,1 @@
+Rename fasta headers using regex. Work in progress.
