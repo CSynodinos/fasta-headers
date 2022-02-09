@@ -136,7 +136,8 @@ def main():
     inp_fl = ""
     out_fl = ""
     patterns = [""]
-    headers(inp = inp_fl, out = out_fl, pattern = patterns, new_id = "foo", new_desc = "bar").rename(count = True)
+    headers(inp = inp_fl, out = out_fl, pattern = patterns, 
+            new_id = "foo", new_desc = "bar").rename(count = True)
 
 if __name__ == "__main__":
     main()
