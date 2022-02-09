@@ -13,7 +13,7 @@ class _info_parser:
         self.csvfl = csvfl
 
     @staticmethod
-    def _main_parser(fl: str) -> list:
+    def _file_parser(fl: str) -> list:
         """Parse through .csv file containing the patterns and their corresponding id and description changes.
 
         Args:
@@ -46,18 +46,18 @@ class _info_parser:
 
     def _pattern_parser(self) -> list:
         """Returns a list containing the specified patterns."""
-        return list(self._main_parser(fl = self.csvfl)[0].values())
+        return list(self._file_parser(fl = self.csvfl)[0].values())
 
     def _new_ids_parser(self) -> list:
         """Returns a list containing the specified new ids."""
-        return list(self._main_parser(fl = self.csvfl)[1].values())
+        return list(self._file_parser(fl = self.csvfl)[1].values())
 
     def _new_desc_parser(self) -> list:
         """Returns a list containing the specified new descriptions."""
-        return list(self._main_parser(fl = self.csvfl)[2].values())
+        return list(self._file_parser(fl = self.csvfl)[2].values())
 
 
-class headers(_info_parser):
+class rename_headers(_info_parser):
     def __init__(self, inp :str, out: str, info: bool, change_id: bool, change_desc: bool, csvfl: str) -> None:
         self.inp = inp
         self.out = out
@@ -106,8 +106,8 @@ class headers(_info_parser):
                 ""f"from {original_description} to {record.description}.")
 
     @classmethod
-    def _exec_parser(cls, c: bool, rec: any, iter: int, nid: str, ndesc: str, out: str) -> None:
-        """Run _logic static method by checking boolean condition.
+    def _init_parser(cls, c: bool, rec: any, iter: int, nid: str, ndesc: str, out: str) -> None:
+        """Run _record_parser method by checking boolean condition.
 
         Args:
             * `c` (bool): Boolean value equal to counter boolean.
@@ -162,7 +162,7 @@ class headers(_info_parser):
 
                     if iter > 1: # only when the first pattern in the list is iterated.
                         if re.search(i, record.id):
-                            self._exec_parser(c = count, rec = record, iter = iter, nid = new_id,
+                            self._init_parser(c = count, rec = record, iter = iter, nid = new_id,
                                             ndesc = new_desc, out = outfl)
                             iter += 1
                         else:
@@ -170,7 +170,7 @@ class headers(_info_parser):
 
                     else:   # Run first pattern seperately.
                         if re.search(i, record.id):
-                            self._exec_parser(c = count, rec = record, iter = iter, nid = new_id,
+                            self._init_parser(c = count, rec = record, iter = iter, nid = new_id,
                                             ndesc = new_desc, out = outfl)
                             iter += 1
                         else:
@@ -193,7 +193,7 @@ def main():
     inp_fl = ""
     out_fl = ""
     patterns = ""
-    headers(inp = inp_fl, out = out_fl, info = True, change_id = True, change_desc = True, csvfl = patterns).rename(count = True)
+    rename_headers(inp = inp_fl, out = out_fl, info = True, change_id = True, change_desc = True, csvfl = patterns).rename(count = True)
 
 if __name__ == "__main__":
     main()
