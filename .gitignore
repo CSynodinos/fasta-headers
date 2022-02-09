@@ -5,6 +5,7 @@
 .__pycache__/
 *.fasta
 *.zip
+*.csv
 test*
 .DS_Store
 
