@@ -58,6 +58,17 @@ class _info_parser:
 
 
 class rename_headers(_info_parser):
+    """ Rename fasta headers.
+
+    Args:
+        * `inp` (str): Input fasta file.
+        * `out` (str): Output fasta file.
+        * `info` (bool): Boolean value to display renaming info. 
+        * `change_id` (bool): Boolean value to enable/disable header id renaming.
+        * `change_desc` (bool): Boolean value to enable/disable header description renaming.
+        * `csvfl` (str): Input csv file that holds the patterns, new ids and descriptions.
+    """
+
     def __init__(self, inp :str, out: str, info: bool, change_id: bool, change_desc: bool, csvfl: str) -> None:
         self.inp = inp
         self.out = out
@@ -135,7 +146,6 @@ class rename_headers(_info_parser):
         Returns:
             * Path to output fasta file.
         """
-
 
         with open(self.inp, "r") as fl, open(self.out, 'w') as outfl:
             headers = 0
