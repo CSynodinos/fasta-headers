@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 from __future__ import annotations
 
 from Bio import SeqIO
@@ -56,19 +55,21 @@ class _info_parser:
         """Returns a list containing the specified new descriptions."""
         return list(self._file_parser(fl = self.csvfl)[2].values())
 
+    @staticmethod
+    def _fasta_info(fl):
+        """Calculate and display the number of headers in in input fasta file.
+
+        Args:
+            fl ([type]: str): Input fasta file path.
+        """
+
+        headers = 0
+        for line in fl:
+            if line.startswith(">"):
+                headers += 1
+        print(f"\nThere are {headers} headers in the input fasta.")
 
 class rename_headers(_info_parser):
-    """ Rename fasta headers.
-
-    Args:
-        * `inp` (str): Input fasta file.
-        * `out` (str): Output fasta file.
-        * `info` (bool): Boolean value to display renaming info. 
-        * `change_id` (bool): Boolean value to enable/disable header id renaming.
-        * `change_desc` (bool): Boolean value to enable/disable header description renaming.
-        * `csvfl` (str): Input csv file that holds the patterns, new ids and descriptions.
-    """
-
     def __init__(self, inp :str, out: str, info: bool, change_id: bool, change_desc: bool, csvfl: str) -> None:
         self.inp = inp
         self.out = out
@@ -113,11 +114,10 @@ class rename_headers(_info_parser):
         SeqIO.write(record, outputfl, 'fasta')
 
         if self.info == True:
-            print(f"\nHeader: {original_header} changed to {record.id}. Description changed" 
+            print(f"\nHeader: {original_header} changed to {record.id}. Description changed " 
                 ""f"from {original_description} to {record.description}.")
 
-    @classmethod
-    def _init_parser(cls, c: bool, rec: any, iter: int, nid: str, ndesc: str, out: str) -> None:
+    def _init_parser(self, c: bool, rec: any, iter: int, nid: str, ndesc: str, out: str) -> None:
         """Run _record_parser method by checking boolean condition.
 
         Args:
@@ -130,11 +130,11 @@ class rename_headers(_info_parser):
         """
 
         if c:
-            cls._record_parser(record = rec, counter = iter, switch_id = nid, 
+            self._record_parser(record = rec, counter = iter, switch_id = nid, 
                     switch_description = ndesc, outputfl = out)
 
         else:   # no count.
-            cls._record_parser(record = rec, switch_id = nid, 
+            self._record_parser(record = rec, switch_id = nid, 
                     switch_description = ndesc, outputfl = out)
 
     def rename(self, count: bool) -> str:
@@ -148,14 +148,8 @@ class rename_headers(_info_parser):
         """
 
         with open(self.inp, "r") as fl, open(self.out, 'w') as outfl:
-            headers = 0
-            for line in fl:
-                if line.startswith(">"):
-                    headers += 1
-
             tmp = SeqIO.parse(self.inp, 'fasta')   # Use it to list id's.
             records = SeqIO.parse(self.inp, 'fasta')   # Use it for the rest of the operations.
-            print(f"\nThere are {headers} headers in the input fasta.")
 
             record_ids = []
             for n in tmp:
@@ -191,7 +185,9 @@ class rename_headers(_info_parser):
             print("\nNo headers with any of the defined patterns were found.\n")
 
         else:
-            print(f"\n{iter - 1} headers were modified and saved in {self.out}.\n")
+            if self.info == True:
+                self._fasta_info(fl)
+                print(f"\n{iter - 1} headers were modified and saved in {self.out}.\n")
 
         if len(invalid_patterns) > 0:
             str = ', '.join(set(invalid_patterns))
