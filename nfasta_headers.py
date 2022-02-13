@@ -236,7 +236,15 @@ def main(i, cv, o, inf, cnt, id, de):
     rename_headers(inp = inp_fl, out = out_fl, info = inf, change_id = id, change_desc = de, csvfl = inp_cv).rename(count = cnt)
 
 
-def parse_args(msg):
+def parse_args(msg) -> argparse.Namespace:
+    """Custom argument parser.
+
+    Args:
+        * `msg` ([type]: str): Description help message.
+
+    Returns:
+        [type]: Namespace of input arguments.
+    """
     parser = argparse.ArgumentParser(description = msg, formatter_class = argparse.RawDescriptionHelpFormatter)
     parser.add_argument("-i", help = "Input fasta file.")
     parser.add_argument("-cv", help = "Input csv file containing the patterns to look for" 
@@ -271,11 +279,11 @@ if __name__ == "__main__":
     cv = arguments.get('cv')
     o = arguments.get('o')
     
-    def bool_parse(var):
+    def bool_parse(var: any) -> bool:
         """Check if parameter is boolean, if not, convert it to boolean.
 
         Args:
-            var ([type]: Any): variable to check for boolean.
+            * `var` ([type]: Any): variable to check for boolean.
 
         Raises:
             TypeError: When unable to convert to boolean.
