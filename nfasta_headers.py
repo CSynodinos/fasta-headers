@@ -3,7 +3,30 @@ from __future__ import annotations
 from Bio import SeqIO
 import re
 import pandas as pd
+import argparse
 
+class InputflError(Exception):
+    """Custom exception class for input files.
+    Args:
+        * Exception ([type]: `str`): Message defining error.
+    Returns:
+        [type]: `str`: User defined message, or simply error message if 
+        no message is defined by the user.
+    """
+
+    __module__ = 'builtins'
+
+    def __init__(self, *args):
+        if args:
+            self.errmessage = args[0]
+        else:
+            self.errmessage = None
+
+    def __str__(self):
+        if self.errmessage:
+            return '{0} '.format(self.errmessage)
+        else:
+            return 'InputflError has been raised'
 
 class _info_parser:
     """Parses all the information required for renaming the fasta file."""
@@ -180,26 +203,88 @@ class rename_headers(_info_parser):
                         else:
                             continue
 
-        # Final checks.
-        if iter == 1:
-            print("\nNo headers with any of the defined patterns were found.\n")
+            # Final checks.
+            if iter == 1:
+                print("\nNo headers with any of the defined patterns were found.\n")
 
-        else:
-            if self.info == True:
-                self._fasta_info(fl)
-                print(f"\n{iter - 1} headers were modified and saved in {self.out}.\n")
+            else:
+                if self.info == True:
+                    self._fasta_info(fl)
+                    print(f"\n{iter - 1} headers were modified and saved in {self.out}.\n")
 
-        if len(invalid_patterns) > 0:
-            str = ', '.join(set(invalid_patterns))
-            print(f"The following specified patterns were not detected: {str}\n")
+            if len(invalid_patterns) > 0:
+                str = ', '.join(set(invalid_patterns))
+                print(f"The following specified patterns were not detected: {str}\n")
 
         return outfl
 
-def main():
-    inp_fl = ""
-    out_fl = ""
-    patterns = ""
-    rename_headers(inp = inp_fl, out = out_fl, info = True, change_id = True, change_desc = True, csvfl = patterns).rename(count = True)
+def main(i, cv, o, inf, cnt, id, de):
+
+    if i == None:
+        raise InputflError('No fasta file was provided.')
+    else:
+        inp_fl = i
+    if cv == None:
+        raise InputflError('No file .csv was provided.')
+    else:
+        inp_cv = cv
+
+    out_fl = o
+
+    print(inp_fl,inp_cv,out_fl,inf, cnt, id, de)
+
+    rename_headers(inp = inp_fl, out = out_fl, info = inf, change_id = id, change_desc = de, csvfl = inp_cv).rename(count = cnt)
+
+
+def parse_args(msg):
+    parser = argparse.ArgumentParser(description = msg, formatter_class = argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("-i", help = "Input fasta file.")
+    parser.add_argument("-cv", help = "Input csv file containing the patterns to look for" 
+                        "with their corresponding id's and descriptions to use for renaming.")
+    parser.add_argument("-o", default = "output.fasta", type = str, 
+                        help = "Optional argument: Name of output fasta file. Default is output.fasta")
+    parser.add_argument("-inf", default = False,
+                        help = "Optional boolean argument: Display info of header renaming. Default is False.")
+    parser.add_argument("-cnt", default = False,
+                        help = "Optional boolean argument: Add a counter when naming the new headers. Default option is False.")
+    parser.add_argument("-id", default = True,
+                        help = "Optional boolean argument: Choose whether to rename header id's. Default is True.")
+    parser.add_argument("-de", default = True,
+                        help = "Optional boolean argument: Choose whether to rename header descriptions. Default is True.")
+    return parser.parse_args()
 
 if __name__ == "__main__":
-    main()
+    msg = ("Header renaming for fasta files.\n\nThis program allows you to rename fasta file headers "
+    "using regular expression. To use, please specify the input file path with the -i option,\nthe name of the csv containing"
+    " all the required information for renaming and the name of the output file"
+    " with the -o option.\nIf no name is specified, the default name will be output.fasta\n"
+    "\nThe .csv file should have the following format:\n\n"
+    "header_pattern\tnew_id\tnew_description\n"
+    "pattern1\tnew_id1\tnew_description1\n"
+    "pattern2\tnew_id2\tnew_description2\n\n"
+    "\t\t. . .")
+
+    args = parse_args(msg = msg)
+    arguments = vars(args)
+
+    i = arguments.get('i')
+    cv = arguments.get('cv')
+    o = arguments.get('o')
+    
+    def bool_parse(var):
+    
+        if type(var) == bool:
+            return var
+        else:
+            if var in ["true", "True", "1"]:
+                return True
+            elif var in ["false", "False", "0"]:
+                return False
+            else:
+                raise TypeError(f"{var} must be true, True, 1, False, false or 0.")
+
+    inf = bool_parse(arguments.get('inf'))
+    cnt = bool_parse(arguments.get('cnt'))
+    id = bool_parse(arguments.get('id'))
+    de = bool_parse(arguments.get('de'))
+    main(i = i, cv = cv, o = o, inf = inf, cnt = cnt, id = id, de = de)
