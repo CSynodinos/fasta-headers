@@ -272,7 +272,18 @@ if __name__ == "__main__":
     o = arguments.get('o')
     
     def bool_parse(var):
-    
+        """Check if parameter is boolean, if not, convert it to boolean.
+
+        Args:
+            var ([type]: Any): variable to check for boolean.
+
+        Raises:
+            TypeError: When unable to convert to boolean.
+
+        Returns:
+            [type]: boolean
+        """
+
         if type(var) == bool:
             return var
         else:
