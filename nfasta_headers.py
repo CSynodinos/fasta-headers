@@ -260,12 +260,14 @@ def bool_parse(var: any) -> bool:
             [type]: boolean
         """
 
+        _true = ["true", "True", "1"]
+        _false = ["false", "False", "0"]
         if type(var) == bool:
             return var
         else:
-            if var in ["true", "True", "1"]:
+            if var in _true:
                 return True
-            elif var in ["false", "False", "0"]:
+            elif var in _false:
                 return False
             else:
                 raise TypeError(f"{var} must be true, True, 1, False, false or 0.")
