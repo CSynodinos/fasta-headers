@@ -6,13 +6,7 @@ import pandas as pd
 import argparse
 
 class InputflError(Exception):
-    """Custom exception class for input files.
-    Args:
-        * Exception ([type]: `str`): Message defining error.
-    Returns:
-        [type]: `str`: User defined message, or simply error message if 
-        no message is defined by the user.
-    """
+    """Custom exception class for input files."""
 
     __module__ = 'builtins'
 
@@ -122,11 +116,6 @@ class rename_headers(_info_parser):
 
         if counter == None:
             counter = ""
-        else:
-            try:
-                int(counter)
-            except:
-                raise ValueError(f"counter must be of type: int if specified, not of type {type(counter).__name__}.")
 
         if self.change_id == True:
             record.id = f'{switch_id}{counter}'
