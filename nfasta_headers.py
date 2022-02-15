@@ -28,21 +28,19 @@ class _info_parser:
     def __init__(self, csvfl) -> None:
         self.csvfl = csvfl
 
-    @staticmethod
-    def _file_parser(fl: str) -> list:
+    def _file_parser(self) -> list:
         """Parse through .csv file containing the patterns and their corresponding id and description changes.
 
         Args:
             * `fl` (str): Input file (.csv format).
 
         Returns:
-            [type]: Three lists;
             * List containing all patterns to find.
             * List containing their corresponding new ids.
             * List containing their corresponding new descriptions.
         """
 
-        df = pd.read_csv(fl)
+        df = pd.read_csv(self.csvfl)
         dict_df = df.to_dict()
         keys = list(dict_df.keys())
 
@@ -208,7 +206,6 @@ class rename_headers(_info_parser):
         return outfl
 
 def main(i, cv, o, inf, cnt, id, de):
-
     if i == None:
         raise InputflError('No fasta file was provided.')
     else:
@@ -250,25 +247,7 @@ def parse_args(msg) -> argparse.Namespace:
                         help = "Optional boolean argument: Choose whether to rename header descriptions. Default is True.")
     return parser.parse_args()
 
-if __name__ == "__main__":
-    msg = ("Header renaming for fasta files.\n\nThis program allows you to rename fasta file headers "
-    "using regular expression. To use, please specify the input file path with the -i option,\nthe name of the csv containing"
-    " all the required information for renaming and the name of the output file"
-    " with the -o option.\nIf no name is specified, the default name will be output.fasta\n"
-    "\nThe .csv file should have the following format:\n\n"
-    "header_pattern\tnew_id\tnew_description\n"
-    "pattern1\tnew_id1\tnew_description1\n"
-    "pattern2\tnew_id2\tnew_description2\n\n"
-    "\t\t. . .")
-
-    args = parse_args(msg = msg)
-    arguments = vars(args)
-
-    i = arguments.get('i')
-    cv = arguments.get('cv')
-    o = arguments.get('o')
-    
-    def bool_parse(var: any) -> bool:
+def bool_parse(var: any) -> bool:
         """Check if parameter is boolean, if not, convert it to boolean.
 
         Args:
@@ -290,6 +269,24 @@ if __name__ == "__main__":
                 return False
             else:
                 raise TypeError(f"{var} must be true, True, 1, False, false or 0.")
+
+if __name__ == "__main__":
+    msg = ("Header renaming for fasta files.\n\nThis program allows you to rename fasta file headers "
+    "using regular expression. To use, please specify the input file path with the -i option,\nthe name of the csv containing"
+    " all the required information for renaming and the name of the output file"
+    " with the -o option.\nIf no name is specified, the default name will be output.fasta\n"
+    "\nThe .csv file should have the following format:\n\n"
+    "header_pattern\tnew_id\tnew_description\n"
+    "pattern1\tnew_id1\tnew_description1\n"
+    "pattern2\tnew_id2\tnew_description2\n\n"
+    "\t\t. . .")
+
+    args = parse_args(msg = msg)
+    arguments = vars(args)
+
+    i = arguments.get('i')
+    cv = arguments.get('cv')
+    o = arguments.get('o')
 
     inf = bool_parse(arguments.get('inf'))
     cnt = bool_parse(arguments.get('cnt'))
