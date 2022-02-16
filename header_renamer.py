@@ -303,7 +303,7 @@ def bool_parse(var: any) -> bool:
                 raise TypeError(f"{var} must be true, True, 1, False, false or 0.")
 
 if __name__ == "__main__":
-    msg = ("Header renaming for fasta files.\n\nThis program allows you to rename fasta file headers "
+    msg = ("###    Header Renaming for .fasta and .fa files   ###\n\nThis program allows you to rename .fasta/.fa file headers "
     "using regular expression. To use, please specify the input file path with the -i option,\nthe name of the csv containing"
     " all the required information for renaming and the name of the output file"
     " with the -o option.\nIf no name is specified, the default name will be output.fasta\n"
