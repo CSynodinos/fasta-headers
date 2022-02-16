@@ -186,7 +186,7 @@ class rename_headers(_info_parser):
             iter = 1
             invalid_patterns = []
             for record in records:  # loop through records.
-                for (i, new_id, new_desc) in zip(self._pattern_parser(), self._new_ids_parser(), self._new_desc_parser()):   # nested loop through specified patterns.
+                for (i, new_id, new_desc) in zip(self._pattern_parser(), self._new_ids_parser(), self._new_desc_parser()):
                     if not any(i in rec for rec in record_ids):
                         invalid_patterns.append(i)
                         continue
@@ -199,7 +199,7 @@ class rename_headers(_info_parser):
                         else:
                             continue
 
-                    else:   # Run first pattern seperately.
+                    else:   # Run first pattern seperately.  Used because first header was being ignored.
                         if re.search(i, record.id):
                             self._init_parser(c = count, rec = record, iter = iter, nid = new_id,
                                             ndesc = new_desc, out = outfl)
@@ -218,7 +218,20 @@ class rename_headers(_info_parser):
 
             if len(invalid_patterns) > 0:
                 str = ', '.join(set(invalid_patterns))
-                print(f"The following specified patterns were not detected: {str}\n")
+
+                def custom_warning(msg, *args, **kwargs):
+                    """Custom warning message. Only when invalid patterns are present in .csv
+
+                    Args:
+                        * `msg` ([type]: str): Warning message.
+
+                    Returns:
+                        * The message."""
+                    return 'Warning: ' + str(msg) + '\n'
+
+                import warnings
+                warnings.formatwarning = custom_warning
+                warnings.warn(f"The following specified patterns were not detected: {str}\n", stacklevel = 0)
 
         return outfl
 
