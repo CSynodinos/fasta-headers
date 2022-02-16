@@ -1,10 +1,10 @@
+#!/usr/bin/env python3
 from __future__ import annotations
 
 from Bio import SeqIO
-import re
+import re, argparse
 from os import path
 import pandas as pd
-import argparse
 
 class InputflError(Exception):
     """Custom exception class for input files."""
