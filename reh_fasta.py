@@ -87,6 +87,18 @@ class _info_parser:
         print(f"\nThere are {headers} headers in the input fasta.")
 
 class rename_headers(_info_parser):
+    """Rename .fasta or .fa file headers using regex. Use a .csv/.tsv file to specify which pattern should the program look for and the
+    corresponding new id and description of the pattern.
+
+    Args:
+        * `inp` (str): Input .fasta or .fa file.
+        * `out` (str): Name of output file.
+        * `info` (bool): Display the renaming info. Default is False.
+        * `change_id` (bool): Change the id of the corresponding header. Default is True.
+        * `change_desc` (bool): Change the description of the corresponding header. Default is True.
+        * `csvfl` (str): Input .csv file for the pattern recognition. Used in the inherited methods from the `_info_parser` class.
+    """
+
     def __init__(self, inp :str, out: str, info: bool, change_id: bool, change_desc: bool, csvfl: str) -> None:
         self.inp = inp
         self.out = out
