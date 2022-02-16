@@ -17,7 +17,7 @@ class InputflError(Exception):
         else:
             self.errmessage = None
 
-    def __str__(self):
+    def __repr__(self):
         if self.errmessage:
             return '{0} '.format(self.errmessage)
         else:
