@@ -73,7 +73,7 @@ class _info_parser:
         return list(self._file_parser(fl = self.csvfl)[2].values())
 
     @staticmethod
-    def _fasta_info(fl):
+    def _fasta_info(fl: str) -> None:
         """Calculate and display the number of headers in in input fasta file.
 
         Args:
