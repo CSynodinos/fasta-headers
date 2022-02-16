@@ -40,6 +40,7 @@ class _info_parser:
             * List containing their corresponding new descriptions.
         """
 
+        assert self.csvfl.endswith(".csv"), f"{self.csvfl} must be a .csv file."
         df = pd.read_csv(self.csvfl)
         dict_df = df.to_dict()
         keys = list(dict_df.keys())
@@ -156,6 +157,9 @@ class rename_headers(_info_parser):
         Returns:
             * Path to output fasta file.
         """
+
+        accepted_format = (".fasta", ".fa")
+        assert self.inp.endswith(accepted_format), f"{self.inp} must be a .fasta or a .fa file."
 
         with open(self.inp, "r") as fl, open(self.out, 'w') as outfl:
             tmp = SeqIO.parse(self.inp, 'fasta')   # Use it to list id's.
