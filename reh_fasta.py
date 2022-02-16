@@ -274,7 +274,7 @@ def bool_parse(var: any) -> bool:
             TypeError: When unable to convert to boolean.
 
         Returns:
-            [type]: boolean
+            [type]: Boolean value.
         """
 
         _true = ["true", "True", "1"]
