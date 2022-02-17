@@ -123,8 +123,10 @@ class rename_headers(_info_parser):
             ValueError: If counter is specified but value is not of type integer.
         """
 
-        original_header = record.id
-        original_description = record.description
+        original_id = record.id
+        original_description = record.description.replace(original_id, "").strip()
+        if original_description == "":
+            original_description = "(No description found)"
 
         if counter == None:
             counter = ""
@@ -138,8 +140,8 @@ class rename_headers(_info_parser):
         SeqIO.write(record, outputfl, 'fasta')
 
         if self.info == True:
-            print(f"\nHeader: original id {original_header} changed to; {record.id}. Description changed " 
-                ""f"from {original_description} to; {record.description}.")
+            print(f"\nOriginal id {original_id}: Changed to -> {record.id}.\nOriginal description {original_description}: " 
+                ""f"Changed to -> {record.description}.")
 
     def _init_parser(self, c: bool, rec: any, iter: int, nid: str, ndesc: str, out: str) -> None:
         """Run _record_parser method by checking boolean condition.
@@ -214,7 +216,7 @@ class rename_headers(_info_parser):
             else:
                 if self.info == True:
                     self._fasta_info(fl)
-                    print(f"\n{iter - 1} headers were modified and saved in {self.out}.\n")
+                    print(f"\n{iter - 1} headers were modified and saved in {self.out}\n")
 
             if len(invalid_patterns) > 0:
                 inv = ', '.join(set(invalid_patterns))
@@ -317,7 +319,6 @@ if __name__ == "__main__":
     i = arguments.get('i')
     cv = arguments.get('cv')
     o = arguments.get('o')
-
     inf = bool_parse(arguments.get('inf'))
     cnt = bool_parse(arguments.get('cnt'))
     id = bool_parse(arguments.get('id'))
