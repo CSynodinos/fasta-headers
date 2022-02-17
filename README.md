@@ -7,7 +7,7 @@ A Python module for renaming fasta file headers using regex.
 ## Installation
 
 ```bash
-  wget https://raw.githubusercontent.com/CSynodinos/rename-fasta-headers/master/header_renamer.py
+  curl https://raw.githubusercontent.com/CSynodinos/rename-fasta-headers/master/header_renamer.py -o header_renamer.py
 ```
 
 This fasta header renaming script works by looking for a pattern in every header of the .fasta file.
