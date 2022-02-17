@@ -24,7 +24,7 @@ class InputflError(Exception):
             return 'InputflError has been raised'
 
 class _info_parser:
-    """Parses all the information required for renaming the fasta file."""
+    """Parses all the information required for renaming the .fasta file."""
 
     def __init__(self, csvfl) -> None:
         self.csvfl = csvfl
@@ -87,11 +87,11 @@ class _info_parser:
         print(f"\nThere are {headers} headers in the input fasta.")
 
 class rename_headers(_info_parser):
-    """Rename .fasta or .fa file headers using regex. Use a .csv/.tsv file to specify which pattern should the program look for and the
+    """Rename .fasta file headers using regex. Use a .csv file to specify which pattern should the program look for and the
     corresponding new id and description of the pattern.
 
     Args:
-        * `inp` (str): Input .fasta or .fa file.
+        * `inp` (str): Input .fasta file.
         * `out` (str): Name of output file.
         * `info` (bool): Display the renaming info. Default is False.
         * `change_id` (bool): Change the id of the corresponding header. Default is True.
@@ -173,8 +173,8 @@ class rename_headers(_info_parser):
             * Path to output fasta file.
         """
 
-        accepted_format = (".fasta", ".fa")
-        assert self.inp.endswith(accepted_format), f"{self.inp} must be a .fasta or a .fa file, not a {path.splitext(self.inp)[1]} file format."
+        accepted_format = ".fasta"
+        assert self.inp.endswith(accepted_format), f"{self.inp} must be a .fasta file, not a {path.splitext(self.inp)[1]} file format."
 
         with open(self.inp, "r") as fl, open(self.out, 'w') as outfl:
             tmp = SeqIO.parse(self.inp, 'fasta')   # Use it to list id's.
@@ -303,7 +303,7 @@ def bool_parse(var: any) -> bool:
                 raise TypeError(f"{var} must be true, True, 1, False, false or 0.")
 
 if __name__ == "__main__":
-    msg = ("###    Header Renaming for .fasta and .fa files   ###\n\nThis program allows you to rename .fasta/.fa file headers "
+    msg = ("###    Header Renaming for .fasta files   ###\n\nThis program allows you to rename .fasta file headers "
     "using regular expression. To use, please specify the input file path with the -i option,\nthe name of the csv containing"
     " all the required information for renaming and the name of the output file"
     " with the -o option.\nIf no name is specified, the default name will be output.fasta\n"
