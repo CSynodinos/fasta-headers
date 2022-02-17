@@ -1,5 +1,3 @@
-Rename fasta headers using regex. Work in progress.
-
 # header_renamer
 A Python module for renaming fasta file headers using regex.
 
@@ -19,12 +17,12 @@ structure:
 ```bash
     pattern,new_id,new_description
     header,foo,bar
-    .   .   .
+                    .   .   .
 ```
 
 ## Example
 ```bash
-    >>>python3 header_renamer.py -i yourfasta.fasta -cv patterns.csv
+    >>>python3 header_renamer.py -i yourfasta.fasta -cv patterns.csv  
 ```
 
 For more information regarding all the options available:
