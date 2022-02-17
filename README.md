@@ -17,6 +17,7 @@ structure:
 ```bash
     pattern,new_id,new_description
     header,foo,bar
+    header2,foo2,bar2
                     .   .   .
 ```
 
