@@ -62,15 +62,15 @@ class _info_parser:
 
     def _pattern_parser(self) -> list:
         """Returns a list containing the specified patterns."""
-        return list(self._file_parser(fl = self.csvfl)[0].values())
+        return list(self._file_parser()[0].values())
 
     def _new_ids_parser(self) -> list:
         """Returns a list containing the specified new ids."""
-        return list(self._file_parser(fl = self.csvfl)[1].values())
+        return list(self._file_parser()[1].values())
 
     def _new_desc_parser(self) -> list:
         """Returns a list containing the specified new descriptions."""
-        return list(self._file_parser(fl = self.csvfl)[2].values())
+        return list(self._file_parser()[2].values())
 
     @staticmethod
     def _fasta_info(fl: str) -> None:
@@ -138,8 +138,8 @@ class rename_headers(_info_parser):
         SeqIO.write(record, outputfl, 'fasta')
 
         if self.info == True:
-            print(f"\nHeader: {original_header} changed to {record.id}. Description changed " 
-                ""f"from {original_description} to {record.description}.")
+            print(f"\nHeader: original id {original_header} changed to; {record.id}. Description changed " 
+                ""f"from {original_description} to; {record.description}.")
 
     def _init_parser(self, c: bool, rec: any, iter: int, nid: str, ndesc: str, out: str) -> None:
         """Run _record_parser method by checking boolean condition.
@@ -217,7 +217,7 @@ class rename_headers(_info_parser):
                     print(f"\n{iter - 1} headers were modified and saved in {self.out}.\n")
 
             if len(invalid_patterns) > 0:
-                str = ', '.join(set(invalid_patterns))
+                inv = ', '.join(set(invalid_patterns))
 
                 def custom_warning(msg, *args, **kwargs):
                     """Custom warning message. Only when invalid patterns are present in .csv
@@ -231,7 +231,7 @@ class rename_headers(_info_parser):
 
                 import warnings
                 warnings.formatwarning = custom_warning
-                warnings.warn(f"The following specified patterns were not detected: {str}\n", stacklevel = 0)
+                warnings.warn(f"The following specified patterns were not detected and have been ignored: {inv}\n", stacklevel = 0)
 
         return outfl
 
@@ -246,8 +246,6 @@ def main(i, cv, o, inf, cnt, id, de):
         inp_cv = cv
 
     out_fl = o
-
-    print(inp_fl,inp_cv,out_fl,inf, cnt, id, de)
 
     rename_headers(inp = inp_fl, out = out_fl, info = inf, change_id = id, change_desc = de, csvfl = inp_cv).rename(count = cnt)
 
