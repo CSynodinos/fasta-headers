@@ -16,9 +16,11 @@ This fasta header renaming script works by looking for a pattern in every header
 Once found, it switches the id and description of that header according to a specified id and description
 respectively. The pattern to find, new id and new description are specified with a .csv file that has the following
 structure:
-                        pattern,new_id,new_description
-                        header,foo,bar
-                        .   .   .
+```bash
+    pattern,new_id,new_description
+    header,foo,bar
+    .   .   .
+```
 
 ## Example
 ```bash
