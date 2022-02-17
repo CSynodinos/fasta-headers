@@ -27,12 +27,12 @@ structure:
 
 ## Example
 ```bash
-    >>>python3 header_renamer.py -i yourfasta.fasta -cv patterns.csv  
+    >>> python3 header_renamer.py -i yourfasta.fasta -cv patterns.csv  
 ```
 
 For more information regarding all the options available:
 ```bash
-    >>>python3 header_renamer.py -h
+    >>> python3 header_renamer.py -h
 ```
 
 ## Features
