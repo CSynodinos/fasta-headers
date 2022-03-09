@@ -29,16 +29,16 @@ class _info_parser:
     def __init__(self, csvfl) -> None:
         self.csvfl = csvfl
 
-    def _file_parser(self) -> list:
+    def _file_parser(self) -> tuple:
         """Parse through .csv file containing the patterns and their corresponding id and description changes.
 
         Args:
             * `fl` (str): Input file (.csv format).
 
         Returns:
-            * List containing all patterns to find.
-            * List containing their corresponding new ids.
-            * List containing their corresponding new descriptions.
+            * Dictionary containing all patterns to find.
+            * Dictionary containing their corresponding new ids.
+            * Dictionary containing their corresponding new descriptions.
         """
 
         assert self.csvfl.endswith(".csv"), f"{self.csvfl} must be a .csv file, not a {path.splitext(self.csvfl)[1]} file format."
@@ -50,10 +50,12 @@ class _info_parser:
         id_key = [keys[1]]
         desc_key = [keys[2]]
 
+        # Convert the dictionary into a list containing 1 element, the dictionary with the specified key and its values.
         patterns = [dict_df[y] for y in pattern_key]
         new_ids = [dict_df[y] for y in id_key]
         new_desc = [dict_df[y] for y in desc_key]
 
+        # Get the first element from the list, which will be equal to the dictionary.
         patterns_dict = patterns[0]
         new_ids_dict = new_ids[0]
         new_desc_dict = new_desc[0]
