@@ -1,5 +1,5 @@
 # header_renamer
-A Python module for renaming fasta file headers using regex.
+A Python script for renaming fasta file headers using regex pattern matching.
 
 ## Authors
 [CSynodinos](https://github.com/CSynodinos)
@@ -22,7 +22,7 @@ structure:
     pattern,new_id,new_description
     header,foo,bar
     header2,foo2,bar2
-                    .   .   .
+                                                    .   .   .
 ```
 
 ## Example
